@@ -18,4 +18,14 @@ class Photo extends Model
         'title',
         'file_path',
     ];
+
+    /**
+     * Get the full URL to the photo.
+     *
+     * @return string
+     */
+    public function getUrlAttribute()
+    {
+        return asset('storage/public/photos' . $this->file_path);
+    }
 }

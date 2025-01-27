@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('photos', function (Blueprint $table) {
-            $table->id();
-            $table->string('title');
-            $table->string('file_path');
-            $table->timestamps();
+            $table->id(); // Primární klíč
+            $table->string('title'); // Název fotografie
+            $table->string('file_path'); // Cesta k souboru
+            $table->timestamps(); // Sloupce pro čas vytvoření a aktualizace
         });
     }
 
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('photos');
+        Schema::dropIfExists('photos'); // Odstraní tabulku při rollbacku
     }
 };
