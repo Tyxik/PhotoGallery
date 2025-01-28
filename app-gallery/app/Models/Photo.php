@@ -25,7 +25,8 @@ class Photo extends Model
      * @return string
      */
     public function getUrlAttribute()
-    {
-        return asset('storage/public/photos' . $this->file_path);
-    }
+{
+    return asset('storage/' . $this->file_path);
+}
+
 }

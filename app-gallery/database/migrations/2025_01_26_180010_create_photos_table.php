@@ -7,23 +7,23 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Run the migrations.
+     * Spuštění migrace (vytvoření tabulky).
      */
     public function up(): void
     {
         Schema::create('photos', function (Blueprint $table) {
             $table->id(); // Primární klíč
-            $table->string('title'); // Název fotografie
-            $table->string('file_path'); // Cesta k souboru
-            $table->timestamps(); // Sloupce pro čas vytvoření a aktualizace
+            $table->string('title'); // Název fotografie (např. "Sunset at Beach")
+            $table->string('file_path'); // Relativní cesta k souboru (např. "photos/sunset.jpg")
+            $table->timestamps(); // Sloupce 'created_at' a 'updated_at'
         });
     }
 
     /**
-     * Reverse the migrations.
+     * Reverzní operace (odstranění tabulky při rollbacku).
      */
     public function down(): void
     {
-        Schema::dropIfExists('photos'); // Odstraní tabulku při rollbacku
+        Schema::dropIfExists('photos'); // Smazání tabulky 'photos'
     }
 };

@@ -8,7 +8,9 @@ use Illuminate\Support\Facades\Storage;
 
 class PhotoController extends Controller
 {
-    // Zobrazení hlavní stránky s fotkami
+    /**
+     * Zobrazení hlavní stránky s fotkami
+     */
     public function welcome()
     {
         // Načti všechny fotografie z databáze, seřazené podle data vytvoření
@@ -18,34 +20,36 @@ class PhotoController extends Controller
         return view('welcome', compact('photos'));
     }
 
-    // Uložení nové fotografie
+    /**
+     * Uložení nové fotografie
+     */
     public function store(Request $request)
-    {
-        // Validace vstupu
-        $request->validate([
-            'title' => 'required|string|max:255', // Název je povinný
-            'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Fotografie musí být obrázek
-        ]);
+{
+    // Validace vstupu
+    $validated = $request->validate([
+        'title' => 'required|string|max:255', // Název je povinný
+        'photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Fotografie musí být obrázek
+    ]);
 
-        // Kontrola složky pro ukládání
-        if (!Storage::disk('public')->exists('photos')) {
-            Storage::disk('public')->makeDirectory('photos'); // Vytvoří složku, pokud neexistuje
-        }
+    // Získání souboru
+    $file = $request->file('photo');
 
-        // Uložení souboru do složky 'photos' v 'storage/app/public'
-        $filePath = $request->file('photo')->store('photos', 'public');
+    // Nastavení cesty pro uložení souboru do public/storage
+    $filePath = $file->move(public_path('storage/photos'), $file->getClientOriginalName());
 
-        // Uložení informace o fotografii do databáze
-        Photo::create([
-            'title' => $request->input('title'), // Název z formuláře
-            'file_path' => $filePath, // Cesta k souboru
-        ]);
+    // Uložení informace o fotografii do databáze
+    Photo::create([
+        'title' => $validated['title'], // Název z formuláře
+        'file_path' => 'photos/' . $file->getClientOriginalName(), // Relativní cesta
+    ]);
 
-        // Přesměrování s úspěšnou zprávou
-        return redirect()->route('welcome')->with('success', 'Photo uploaded successfully!');
-    }
+    // Přesměrování s úspěšnou zprávou
+    return redirect()->route('welcome')->with('success', 'Photo uploaded successfully!');
+}
 
-    // Smazání fotografie
+    /**
+     * Smazání fotografie
+     */
     public function destroy(Photo $photo)
     {
         // Smazání souboru z úložiště
@@ -60,10 +64,30 @@ class PhotoController extends Controller
         return redirect()->route('welcome')->with('success', 'Photo deleted successfully.');
     }
 
-    // Metoda pro zobrazení galerie (volitelné)
-    public function index()
+    /**
+     * Zobrazení galerie
+     */
+    public function index(Request $request)
     {
-        $photos = Photo::orderBy('created_at', 'desc')->get();
-        return view('photos.index', compact('photos'));
+        // Filtrování podle vyhledávacího dotazu
+        $search = $request->input('search');
+        $photos = Photo::when($search, function ($query, $search) {
+            return $query->where('title', 'like', "%{$search}%");
+        })->orderBy('created_at', 'desc')->get();
+
+        // Předání fotografií do šablony 'photos.index'
+        return view('photos.index', compact('photos', 'search'));
+    }
+
+    /**
+     * Zobrazení jedné fotografie
+     */
+    public function show($id)
+    {
+        // Najdi fotografii podle ID
+        $photo = Photo::findOrFail($id);
+
+        // Předání konkrétní fotografie do šablony
+        return view('photos.show', compact('photo'));
     }
 }
