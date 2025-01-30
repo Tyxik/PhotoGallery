@@ -1,7 +1,8 @@
 
 Jednoduchá fotogalerie vytvořená v Laravelu. Umožňuje uživatelům nahrávat, zobrazovat fotografie.   
 
-![Screenshot aplikace]![image](https://github.com/user-attachments/assets/09a6b86e-3a83-4a26-8eeb-6988363e49aa)
+![Screenshot aplikace]!![image](https://github.com/user-attachments/assets/c13fcc98-54fa-4a3e-a849-e9846d4051ba)
+
 
 
 
