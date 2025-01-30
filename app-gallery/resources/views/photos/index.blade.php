@@ -3,7 +3,7 @@
 @section('content')
 <div class="container mx-auto mt-6 animate-fade-in">
     <h1 class="text-3xl font-bold text-center text-white">Photo Gallery</h1>
-    <p class="text-center mt-4 text-white">Browse your uploaded photos below.</p>
+    <p class="text-center mt-4 text-white">Browse your photos below.</p>
 
     <!-- Úspěšná zpráva -->
     @if (session('success'))

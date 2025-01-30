@@ -18,8 +18,8 @@
             
             <!-- Dropdown pro řazení -->
             <select name="sort" class="border p-2 rounded focus:outline-none focus:ring focus:ring-purple-300">
-                <option value="desc" {{ request('sort') == 'desc' ? 'selected' : '' }}>Nejnovější</option>
-                <option value="asc" {{ request('sort') == 'asc' ? 'selected' : '' }}>Nejstarší</option>
+                <option value="desc" {{ request('sort') == 'desc' ? 'selected' : '' }}>Newest</option>
+                <option value="asc" {{ request('sort') == 'asc' ? 'selected' : '' }}>oldest</option>
             </select>
 
             <button 
