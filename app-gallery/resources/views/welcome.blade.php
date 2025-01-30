@@ -8,12 +8,20 @@
     <!-- Filtrační formulář -->
     <div class="mt-8 animate-slide-up">
         <form action="{{ route('welcome') }}" method="GET" class="grid grid-cols-1 gap-4 max-w-md mx-auto bg-blue shadow-md p-6 rounded-lg">
+            <!-- Vyhledávání -->
             <input 
                 type="text" 
                 name="search" 
                 placeholder="Search by title..." 
                 value="{{ old('search', request('search')) }}" 
                 class="border p-2 rounded focus:outline-none focus:ring focus:ring-purple-300">
+            
+            <!-- Dropdown pro řazení -->
+            <select name="sort" class="border p-2 rounded focus:outline-none focus:ring focus:ring-purple-300">
+                <option value="desc" {{ request('sort') == 'desc' ? 'selected' : '' }}>Nejnovější</option>
+                <option value="asc" {{ request('sort') == 'asc' ? 'selected' : '' }}>Nejstarší</option>
+            </select>
+
             <button 
                 type="submit" 
                 class="bg-gradient-to-r from-purple-500 to-pink-500 text-black px-4 py-2 rounded hover:shadow-lg transition animate-pulse-once">

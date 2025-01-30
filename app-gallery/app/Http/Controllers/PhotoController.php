@@ -13,16 +13,24 @@ class PhotoController extends Controller
      */
     public function welcome(Request $request)
     {
-        // Získání vyhledávacího dotazu
+        // Získání vyhledávacího dotazu a požadovaného řazení
         $search = $request->input('search');
+        $sort = $request->input('sort', 'desc'); // Výchozí hodnota: nejnovější
 
-        // Načti všechny fotografie z databáze s filtrováním podle titulu
+        // Ověření, že řazení obsahuje pouze povolené hodnoty
+        if (!in_array($sort, ['asc', 'desc'])) {
+            $sort = 'desc';
+        }
+
+        // Načti všechny fotografie s filtrováním podle titulu a řazením podle vytvoření
         $photos = Photo::when($search, function ($query, $search) {
-            return $query->where('title', 'like', "%{$search}%");
-        })->orderBy('created_at', 'desc')->get();
+                return $query->where('title', 'like', "%{$search}%");
+            })
+            ->orderBy('created_at', $sort)
+            ->get();
 
-        // Předání fotografií a vyhledávacího dotazu do šablony 'welcome.blade.php'
-        return view('welcome', compact('photos', 'search'));
+        // Předání proměnných do šablony
+        return view('welcome', compact('photos', 'search', 'sort'));
     }
 
     /**
@@ -39,7 +47,7 @@ class PhotoController extends Controller
         // Získání souboru
         $file = $request->file('photo');
 
-        // Nastavení cesty pro uložení souboru do public/storage
+        // Uložení souboru do public/storage/photos
         $filePath = $file->move(public_path('storage/photos'), $file->getClientOriginalName());
 
         // Uložení informace o fotografii do databáze
@@ -74,14 +82,23 @@ class PhotoController extends Controller
      */
     public function index(Request $request)
     {
-        // Filtrování podle vyhledávacího dotazu
+        // Získání vyhledávacího dotazu a řazení
         $search = $request->input('search');
-        $photos = Photo::when($search, function ($query, $search) {
-            return $query->where('title', 'like', "%{$search}%");
-        })->orderBy('created_at', 'desc')->get();
+        $sort = $request->input('sort', 'desc');
 
-        // Předání fotografií do šablony 'photos.index'
-        return view('photos.index', compact('photos', 'search'));
+        // Ověření platnosti řazení
+        if (!in_array($sort, ['asc', 'desc'])) {
+            $sort = 'desc';
+        }
+
+        // Načtení fotografií podle filtru
+        $photos = Photo::when($search, function ($query, $search) {
+                return $query->where('title', 'like', "%{$search}%");
+            })
+            ->orderBy('created_at', $sort)
+            ->get();
+
+        return view('photos.index', compact('photos', 'search', 'sort'));
     }
 
     /**

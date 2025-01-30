@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mx-auto mt-6">
-    <h1 class="text-3xl font-bold text-center">Photo Gallery</h1>
-    <p class="text-center mt-2 text-gray-600">Browse your uploaded photos below.</p>
+<div class="container mx-auto mt-6 animate-fade-in">
+    <h1 class="text-3xl font-bold text-center text-white">Photo Gallery</h1>
+    <p class="text-center mt-4 text-white">Browse your uploaded photos below.</p>
 
     <!-- Úspěšná zpráva -->
     @if (session('success'))
@@ -15,7 +15,7 @@
     <!-- Galerie fotek -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-10">
         @forelse($photos as $photo)
-        <div class="relative group">
+        <div class="relative group animate-slide-up">
             <img 
                 src="{{ asset('storage/' . $photo->file_path) }}" 
                 alt="{{ $photo->title }}" 
@@ -26,7 +26,7 @@
                     @method('DELETE')
                     <button 
                         type="submit" 
-                        class="bg-red-500 text-white px-4 py-2 rounded">
+                        class="bg-red-500 text-white px-4 py-2 rounded hover:animate-pulse">
                         Delete
                     </button>
                 </form>

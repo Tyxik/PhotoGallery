@@ -4,12 +4,12 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PhotoController;
 use Illuminate\Support\Facades\Route;
 
-// Veřejná cesta pro zobrazení hlavní stránky s fotkami
+// Veřejná cesta pro zobrazení hlavní stránky s fotkami (s filtrováním podle názvu a řazení)
 Route::get('/', [PhotoController::class, 'welcome'])->name('welcome');
 
 // Skupina tras chráněná middleware 'auth'
 Route::middleware(['auth'])->group(function () {
-    // Cesta pro zobrazení galerie
+    // Cesta pro zobrazení galerie (s filtrováním podle názvu a řazení)
     Route::get('/photos', [PhotoController::class, 'index'])->name('photos.index');
     // Cesta pro ukládání nové fotky
     Route::post('/photos', [PhotoController::class, 'store'])->name('photos.store');
