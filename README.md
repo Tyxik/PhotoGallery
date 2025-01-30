@@ -1,7 +1,8 @@
 
 Jednoduchá fotogalerie vytvořená v Laravelu. Umožňuje uživatelům nahrávat, zobrazovat fotografie.   
 
-![Screenshot aplikace](https://via.placeholder.com/800x400?text=Screenshot+aplikace)  
+![Screenshot aplikace](https://github.com/user-attachments/assets/e1e93d39-8755-4bed-9756-15ca11bfae75)
+)  
 
 ## ✨ Funkce aplikace  
 
