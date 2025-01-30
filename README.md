@@ -1,12 +1,14 @@
 
 Jednoduchá fotogalerie vytvořená v Laravelu. Umožňuje uživatelům nahrávat, zobrazovat fotografie.   
 
-![Screenshot aplikace]![image](https://github.com/user-attachments/assets/eae7e761-5326-4e02-9eb9-391e7876a1ec)
+![Screenshot aplikace]![image](https://github.com/user-attachments/assets/09a6b86e-3a83-4a26-8eeb-6988363e49aa)
+
 
 
 ## ✨ Funkce aplikace  
 
-✅ Nahrávání fotek s popiskem  
+✅ Nahrávání fotek s popiskem 
+✅ Filtrování fotek
 ✅ Galerie s možností mazání fotografií  
 ✅ Vyhledávání fotografií podle názvu  
 ✅ Responzivní design postavený na **Tailwind CSS**  
